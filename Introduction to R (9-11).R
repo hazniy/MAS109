@@ -75,5 +75,47 @@ print(results) #[1]  1  1  2  3  5  8 13 21 34 55
 #If we started at i = 1, results[i-1] and results[i-2] would not exist (out of bounds error).
 
 #11 : Computing accurate Monte Carlo estimates
+#the more simulations we do, the better the estimate will be. Simulating 5 sets of 20 birthdays wasn’t enough, so let’s try a larger number: 100,000:
+numberUnique <- rep(0, 100000)
+for(i in 1:100000){
+  birthdays <- sample(x = 1:365, size = 20, replace = TRUE)
+  numberUnique[i] <- length(unique(birthdays))
+}
+mean(numberUnique < 20) #[1] 0.40967
+#exercise 11.1
+#Leap Year Constraint: Since all 30 people were born in a leap year, their birthdays are randomly assigned from 366 days instead of 365.
+#Monte Carlo Method: We will simulate this scenario many times (e.g., 100,000 trials) and compute the relative frequency of each event.
+#1. estimate the probability that two people only have birthdays on the same day.
+#2. estimate the probability that at least two people have birthdays on the same day;
+set.seed(123)  # For reproducibility
+n_simulations <- 100000  # Number of trials
+n_people <- 30
+days_in_leap_year <- 366
 
+# Counters
+count_at_least_one_shared <- 0
+count_exactly_one_pair <- 0
 
+# Simulation loop
+for (i in 1:n_simulations) {
+  birthdays <- sample(1:days_in_leap_year, size = n_people, replace = TRUE)
+  unique_counts <- table(birthdays)
+  
+  # Check if at least one birthday is shared
+  if (any(unique_counts > 1)) {
+    count_at_least_one_shared <- count_at_least_one_shared + 1
+  }
+  
+  # Check if exactly one pair exists (one birthday occurs twice, all others are unique)
+  if (sum(unique_counts == 2) == 1 && sum(unique_counts > 2) == 0) {
+    count_exactly_one_pair <- count_exactly_one_pair + 1
+  }
+}
+
+# Estimate probabilities
+prob_at_least_one_shared <- count_at_least_one_shared / n_simulations
+prob_exactly_one_pair <- count_exactly_one_pair / n_simulations
+
+# Print results
+cat("Estimated probability of at least two people sharing a birthday:", prob_at_least_one_shared, "\n")
+cat("Estimated probability of exactly one pair sharing a birthday:", prob_exactly_one_pair, "\n")
