@@ -1,3 +1,8 @@
+#1 : R and Rstudio
+#2 : Using R as calculator 
+#3 : variables & vectors 
+#4 : Functions
+
 #left : Console 
 #Inputs & outputs 
 2 + 3 #[1] 5
