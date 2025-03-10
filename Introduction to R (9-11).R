@@ -1,5 +1,6 @@
 #9 : Monte Carlo Methods 
 #10 : loops 
+#11 : Computing accurate Monte Carlo estimates
 #simulate one set of 20 birthdays at a time, and record the number of unique birthdays.
 numberUnique <- rep(0, times = 5)
 numberUnique #[1] 0 0 0 0 0
