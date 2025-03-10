@@ -1,4 +1,7 @@
 #5 : Packages 
+#6 : data frames 
+#7 : Scripts 
+#8 : A tip for understanding R code
 #install.packages() to install a package.
 install.packages("zoo")
 #need to call back the package, 2 ways : 
