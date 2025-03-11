@@ -107,3 +107,92 @@ The calculated probability that at least two people share a birthday is: r p_sha
 
 ###Monte Carlo Simulation:
 The estimated probability from the Monte Carlo simulation is:r p_shared_monte_carlo
+
+#code chunk so that R not appear on html : https://yihui.org/knitr/options/
+#for plotting 
+ ```{r, fig.align = 'center', fig.cap = "My figure caption", fig.height = 3, fig.width = 3}
+ggplot2::ggplot(mtcars, ggplot2::aes(x = wt, y = mpg)) +
+  ggplot2::geom_point()
+```                                                                                                                                                                                                                                             
+#fig.height and fig.width that give the figure size you want.                                                                                                                                                                                                                                              
+#you may find the option out.width = "60%" easier to work with than fig.height and fig.width                                                                                                                                                                                                                                             
+#exercise 13.2
+---
+title: "Birthday Problem - Monte Carlo Simulation"
+author: "Your Name"
+date: "2025-03-11"
+output: html_document
+---
+
+## Problem Overview
+
+In this exercise, we are estimating the probability that at least two people share the same birthday. We assume that there are 30 people in the room, and each person is equally likely to have been born on any of the 366 days of the year (for a leap year). The two main approaches we will use are the **analytical solution** and the **Monte Carlo simulation**.
+
+### Analytical Solution
+
+To calculate the probability that at least two people share the same birthday, we first calculate the probability that **all people have unique birthdays**. This probability can be calculated using the formula:
+
+\[
+P(\text{all unique}) = \frac{366}{366} \times \frac{365}{366} \times \dots \times \frac{(366 - 29)}{366}
+\]
+
+The probability that **at least one person shares a birthday** is then:
+
+\[
+P(\text{at least one shared}) = 1 - P(\text{all unique})
+\]
+
+### R Code for Analytical Solution
+
+```{r, echo=FALSE}
+# Analytical solution for birthday problem
+n_people <- 30
+days_in_leap_year <- 366
+
+# Compute probability that all birthdays are unique
+p_unique <- prod((days_in_leap_year:(days_in_leap_year - n_people + 1)) / days_in_leap_year)
+
+# Compute probability that at least one pair shares a birthday
+p_shared <- 1 - p_unique
+
+# Display result
+p_shared
+```
+###monte carlo                                                                                                                                                                                               
+```{r, echo=FALSE}
+                                     
+set.seed(123)  # Set seed for reproducibility
+n_simulations <- 10000  # Number of simulations
+n_people <- 30  # Number of people
+days_in_leap_year <- 366  # Days in a leap year
+count_shared <- 0  # Counter for cases with shared birthdays
+
+
+# Run simulations
+for (i in 1:n_simulations) {
+  birthdays <- sample(1:days_in_leap_year, size = n_people, replace = TRUE)  # Simulate birthdays
+  if (length(unique(birthdays)) < n_people) {  # Check if there are duplicate birthdays
+    count_shared <- count_shared + 1
+  }
+}
+
+# Estimate probability
+p_shared_monte_carlo <- count_shared / n_simulations  # Estimate probability
+p_shared_monte_carlo
+```                                                                                                                                                                                                                                             
+###histogram                                                                                                                                                                                                                                            
+```{r, echo=FALSE}
+# Pre-allocate vector for storing number of unique birthdays
+numberUnique <- rep(0, 10)
+
+
+# Run the simulation and store results
+for (i in 1:10) {
+  birthdays <- sample(1:days_in_leap_year, size = n_people, replace = TRUE)
+  numberUnique[i] <- length(unique(birthdays))
+}
+
+# Generate histogram for unique birthdays
+hist(numberUnique, main = "Histogram of Number of Unique Birthdays", xlab = "Number of Unique Birthdays", col = "lightblue")
+```                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                              
