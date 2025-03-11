@@ -108,8 +108,29 @@ The calculated probability that at least two people share a birthday is: r p_sha
 ###Monte Carlo Simulation:
 The estimated probability from the Monte Carlo simulation is:r p_shared_monte_carlo
 
-#code chunk so that R not appear on html : https://yihui.org/knitr/options/
-#for plotting 
+#################code chunk so that R not appear on html : https://yihui.org/knitr/options/
+#################table : https://www.tablesgenerator.com/markdown_tables.
+#################knitr() package : produce table from data frame 
+###########default heading                                                                                                                                                                                                                                               
+---
+title: "My Report Title"
+author: "Jeremy Oakley"
+date: "2024-01-27"
+output:
+  pdf_document: 
+    number_sections: true
+  html_document: 
+    number_sections: true
+fontsize: 11pt
+urlcolor: blue
+header-includes:
+  - \usepackage{bm}
+---                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                              
+knitr::kable(head(mtcars))                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                              #for plotting 
  ```{r, fig.align = 'center', fig.cap = "My figure caption", fig.height = 3, fig.width = 3}
 ggplot2::ggplot(mtcars, ggplot2::aes(x = wt, y = mpg)) +
   ggplot2::geom_point()
@@ -195,4 +216,4 @@ for (i in 1:10) {
 # Generate histogram for unique birthdays
 hist(numberUnique, main = "Histogram of Number of Unique Birthdays", xlab = "Number of Unique Birthdays", col = "lightblue")
 ```                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                          
